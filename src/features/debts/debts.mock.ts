@@ -1,0 +1,48 @@
+import type { Debt } from '../../types/common';
+
+export const debtsMock: Debt[] = [
+  {
+    id: 'd-1001',
+    contactId: 'c-1',
+    title: 'Car repair loan',
+    amount: 1200,
+    paidAmount: 450,
+    dueDate: '2026-04-10',
+    status: 'PARTIAL',
+    notes: 'Loan for brake replacement',
+    createdAt: '2026-02-02',
+  },
+  {
+    id: 'd-1002',
+    contactId: 'c-2',
+    title: 'Laptop purchase',
+    amount: 900,
+    paidAmount: 900,
+    dueDate: '2026-02-20',
+    status: 'PAID',
+    notes: 'Paid off early',
+    createdAt: '2026-01-12',
+  },
+  {
+    id: 'd-1003',
+    contactId: 'c-3',
+    title: 'Vacation split',
+    amount: 1500,
+    paidAmount: 300,
+    dueDate: '2026-05-01',
+    status: 'ACTIVE',
+    notes: 'Shared villa costs',
+    createdAt: '2026-03-01',
+  },
+  {
+    id: 'd-1004',
+    contactId: 'c-4',
+    title: 'Medical bill',
+    amount: 700,
+    paidAmount: 0,
+    dueDate: '2026-03-28',
+    status: 'OVERDUE',
+    notes: 'Clinic invoice',
+    createdAt: '2026-01-28',
+  },
+];

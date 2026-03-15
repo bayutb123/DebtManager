@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color: theme('colors.slate.900');
+  background-color: theme('colors.slate.50');
+  font-family: theme('fontFamily.body');
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 antialiased;
+}
+
+#root {
+  @apply min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100;
+}
+
+.glass-panel {
+  @apply bg-white/80 backdrop-blur border border-slate-200 shadow-card rounded-2xl;
+}
+
+.page-grid {
+  @apply grid gap-6 md:grid-cols-12;
+}
+
+.card-title {
+  @apply text-base font-semibold text-slate-900;
+}
+
+.card-subtitle {
+  @apply text-sm text-slate-500;
+}
