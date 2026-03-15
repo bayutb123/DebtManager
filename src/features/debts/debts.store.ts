@@ -42,7 +42,7 @@ export const useDebtStore = create<DebtState>((set, get) => ({
   },
   async addPayment(id, payment) {
     const updated = await DebtService.addPayment(id, payment);
-    set({ debts: get().debts.map((d) => (d.id === id ? updated : d)) });
-    return updated;
+    set({ debts: get().debts.map((d) => (d.id === id ? (updated as Debt) : d)) });
+    return updated as Debt;
   },
 }));

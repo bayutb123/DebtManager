@@ -44,7 +44,7 @@ export const useReceivableStore = create<ReceivableState>((set, get) => ({
   },
   async addPayment(id, payment) {
     const updated = await ReceivableService.addPayment(id, payment);
-    set({ receivables: get().receivables.map((d) => (d.id === id ? updated : d)) });
-    return updated;
+    set({ receivables: get().receivables.map((d) => (d.id === id ? (updated as Receivable) : d)) });
+    return updated as Receivable;
   },
 }));

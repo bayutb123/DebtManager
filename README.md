@@ -94,6 +94,7 @@ npm run dev
 ### Required env vars
 - `VITE_GOOGLE_CLIENT_ID` — your Web OAuth client ID (Google/Firebase console)
 - `VITE_API_BASE_URL` — backend base URL (e.g., http://localhost:8080)
+- `VITE_USE_MOCKS` — set to `true` to run 100% client-side (localStorage) and skip backend calls
 - Firebase (optional analytics): `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_STORAGE_BUCKET`, `VITE_FIREBASE_MESSAGING_SENDER_ID`, `VITE_FIREBASE_APP_ID`, `VITE_FIREBASE_MEASUREMENT_ID`
 
 ### Auth flow

@@ -3,19 +3,19 @@ import { DebtsApi } from './debts.api';
 import type { DebtFilters } from './debts.types';
 
 export const DebtService = {
-  list: (filters?: DebtFilters) =>
-    DebtsApi.list().then((data) => {
-      if (!filters) return data;
-      const { status, search } = filters;
-      return data.filter((d) => {
-        const matchesStatus = !status || status === 'ALL' || d.status === status;
-        const matchesSearch =
-          !search ||
-          d.title.toLowerCase().includes(search.toLowerCase()) ||
-          d.notes?.toLowerCase().includes(search.toLowerCase());
-        return matchesStatus && matchesSearch;
-      });
-    }),
+  list: async (filters?: DebtFilters) => {
+    const data = await DebtsApi.list();
+    if (!filters) return data;
+    const { status, search } = filters;
+    return data.filter((d) => {
+      const matchesStatus = !status || status === 'ALL' || d.status === status;
+      const matchesSearch =
+        !search ||
+        d.title.toLowerCase().includes(search.toLowerCase()) ||
+        d.notes?.toLowerCase().includes(search.toLowerCase());
+      return matchesStatus && matchesSearch;
+    });
+  },
   getById: DebtsApi.getById,
   create: DebtsApi.create,
   update: DebtsApi.update,
