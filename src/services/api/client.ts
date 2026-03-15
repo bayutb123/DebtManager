@@ -1,6 +1,6 @@
 import { useAuthStore } from '../../features/auth/auth.store';
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
@@ -44,11 +44,17 @@ export const apiClient = {
       headers.Authorization = `Bearer ${token}`;
     }
 
-    const res = await fetch(`${BASE_URL}${path}`, {
-      ...options,
-      method,
-      headers,
-    });
+    const url = path.startsWith('http') ? path : `${BASE_URL}${path}`;
+    let res: Response;
+    try {
+      res = await fetch(url, {
+        ...options,
+        method,
+        headers,
+      });
+    } catch (err) {
+      throw new Error(`Network error contacting API at ${url}`);
+    }
 
     return handleResponse<T>(res);
   },
