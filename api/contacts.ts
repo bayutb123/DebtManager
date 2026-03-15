@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { run } from './_db';
 import { sendJSON, handleError } from './_response';
+import { parseBody } from './_parseBody';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
@@ -12,7 +13,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     if (req.method === 'POST') {
-      const { name, phone, notes } = req.body || {};
+      const { name, phone, notes } = parseBody(req) || {};
       const rows = await run(
         `INSERT INTO contacts (name, phone, notes) VALUES ($1,$2,$3) RETURNING id, name, phone, notes, created_at as "createdAt"`,
         [name, phone, notes ?? null],
@@ -21,7 +22,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     if (req.method === 'PUT') {
-      const { id, name, phone, notes } = req.body || {};
+      const { id, name, phone, notes } = parseBody(req) || {};
       const rows = await run(
         `UPDATE contacts SET name=$2, phone=$3, notes=$4 WHERE id=$1 RETURNING id, name, phone, notes, created_at as "createdAt"`,
         [id, name, phone, notes ?? null],

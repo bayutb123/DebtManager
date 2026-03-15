@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { run } from './_db';
 import { sendJSON, handleError } from './_response';
+import { parseBody } from './_parseBody';
 
 const computeStatus = (amount: number, paid: number, due: string) => {
   if (paid >= amount) return 'PAID';
@@ -23,7 +24,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     if (req.method === 'POST') {
-      const { contactId, title, amount, dueDate, notes } = req.body || {};
+      const { contactId, title, amount, dueDate, notes } = parseBody(req) || {};
       const status = computeStatus(Number(amount), 0, dueDate);
       const rows = await run(
         `INSERT INTO receivables (contact_id, title, amount, paid_amount, due_date, status, notes)
@@ -36,7 +37,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     if (req.method === 'PUT') {
-      const { id, title, amount, dueDate, notes, contactId, paidAmount } = req.body || {};
+      const { id, title, amount, dueDate, notes, contactId, paidAmount } = parseBody(req) || {};
       const status = computeStatus(Number(amount), Number(paidAmount ?? 0), dueDate);
       const rows = await run(
         `UPDATE receivables

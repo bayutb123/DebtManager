@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { run } from '../../_db';
 import { sendJSON, handleError } from '../../_response';
+import { parseBody } from '../../_parseBody';
 
 const computeStatus = (amount: number, paid: number, due: string) => {
   if (paid >= amount) return 'PAID';
@@ -14,7 +15,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') return sendJSON(res, 405, { error: 'MethodNotAllowed' });
   try {
     const { id } = req.query;
-    const { amount, date, note } = req.body || {};
+    const { amount, date, note } = parseBody(req) || {};
     const rows = await run<{ amount: number; paidAmount: number; dueDate: string }>(
       `SELECT amount::float as amount, paid_amount::float as "paidAmount", due_date as "dueDate" FROM receivables WHERE id=$1`,
       [id],

@@ -6,7 +6,7 @@ export const getPool = () => {
   if (pool) return pool;
   const { PGHOST, PGPORT, PGDATABASE, PGUSER, PGPASSWORD, PGSSLMODE } = process.env;
   if (!PGHOST || !PGPORT || !PGDATABASE || !PGUSER) {
-    return null;
+    throw new Error('Database env vars missing');
   }
   pool = new Pool({
     host: PGHOST,
